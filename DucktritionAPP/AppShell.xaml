@@ -3,12 +3,26 @@
     x:Class="DucktritionAPP.AppShell"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    xmlns:local="clr-namespace:DucktritionAPP"
-    Title="DucktritionAPP">
-
-    <ShellContent
-        Title="Home"
-        ContentTemplate="{DataTemplate local:MainPage}"
-        Route="MainPage" />
-
+    xmlns:views="clr-namespace:DucktritionAPP.Views"
+    Shell.FlyoutBehavior="Disabled">
+    
+    <TabBar>
+        <ShellContent
+            Title="Home"
+            ContentTemplate="{DataTemplate views:HomePage}"
+            Icon="{OnPlatform 'houseico.png', iOS='', MacCatalyst=''}"/>
+        <ShellContent
+            Title="Search"
+            ContentTemplate="{DataTemplate views:SearchPage}"
+            Icon="{OnPlatform 'houseico.png', iOS='', MacCatalyst=''}"/>
+        <ShellContent
+            Title="Scanner"
+            ContentTemplate="{DataTemplate views:ScannerPage}"
+            Icon="{OnPlatform 'houseico.png', iOS='', MacCatalyst=''}"/>
+        <ShellContent
+            Title="Forum"
+            ContentTemplate="{DataTemplate views:ForumPage}"
+            Icon="{OnPlatform 'houseico.png', iOS='', MacCatalyst=''}"/>
+    </TabBar>
+    
 </Shell>

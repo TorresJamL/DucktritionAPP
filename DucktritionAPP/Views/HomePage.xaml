@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="DucktritionAPP.Views.HomePage"
+             Title="HomePage">
+    <VerticalStackLayout Spacing="10" Margin="5">
+        <Label 
+            Text="Welcome"
+            FontSize="30"
+            VerticalOptions="Center" 
+            HorizontalOptions="Center" />
+        <Label
+            Text="Adjust Your Filters Below!"
+            FontSize="10"
+            VerticalOptions="Center"
+            HorizontalOptions="Center"
+            />
+        <Label
+            Text="Active Filters"
+            FontSize="20"
+            FontAttributes="Italic"
+            VerticalOptions="Center"
+            HorizontalOptions="Start"
+            />
+        <Grid ColumnDefinitions="*,*" ColumnSpacing="4">
+            <Button Text="" />
+        </Grid>
+    </VerticalStackLayout>
+</ContentPage>
