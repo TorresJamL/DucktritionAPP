@@ -6,12 +6,12 @@
     <VerticalStackLayout Spacing="10" Margin="5" Padding="20">
         <Label 
             Text="Welcome"
-            FontSize="30"
+            FontSize="40"
             VerticalOptions="Center" 
             HorizontalOptions="Center" />
         <Label
             Text="Adjust Your Filters Below!"
-            FontSize="10"
+            FontSize="15"
             VerticalOptions="Center"
             HorizontalOptions="Center"
             />

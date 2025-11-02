@@ -4,7 +4,9 @@ namespace DucktritionAPP.Views;
 
 public partial class HomePage : ContentPage
 {
-	List<string> appFilters = new() { "Vegetarian", "Almond Allegy", "Shellfish Allergy", "Lactose Intolerant" };
+	readonly List<string> appFilters = [
+        "Vegetarian", "Almond Allegy", "Shellfish Allergy", "Lactose Intolerant"
+        ];
     UserFilterService filterService = UserFilterService.Inst;
 
 	public HomePage()
@@ -18,10 +20,13 @@ public partial class HomePage : ContentPage
 
         foreach (var filter in appFilters.Except(filterService.UserFilters))
         {
-            var layout = new HorizontalStackLayout
+            var layout = new Grid
             {
-                HorizontalOptions = LayoutOptions.Fill,
-                Spacing = 10
+                ColumnDefinitions =
+                {
+                    new ColumnDefinition { Width = GridLength.Star },
+                    new ColumnDefinition { Width = GridLength.Auto }
+                }, Padding = new Thickness(0, 5)
             };
 
             var label = new Label
@@ -29,26 +34,24 @@ public partial class HomePage : ContentPage
                 Text = filter,
                 VerticalOptions = LayoutOptions.Center
             };
-
             var addButton = new Button
             {
                 Text = "+",
                 HorizontalOptions = LayoutOptions.End,
-                WidthRequest = 30,
-                HeightRequest = 30,
-                CornerRadius = 15,
-                BackgroundColor = Colors.LightGray
+                WidthRequest = 15,
+                HeightRequest = 15,
+                CornerRadius = 10,
+                BackgroundColor = Colors.Green,
+                VerticalOptions = LayoutOptions.Center
             };
-
             addButton.Clicked += (s, e) =>
             {
                 filterService.UserFilters.Add(filter);
                 BuildActiveFilters();
                 BuildAvailableFilters();
             };
-
-            layout.Children.Add(label);
-            layout.Children.Add(addButton);
+            layout.Add(label, 0, 0);
+            layout.Add(addButton, 1, 0);
             AvailableFiltersArea.Children.Add(layout);
         }
     }
@@ -56,7 +59,6 @@ public partial class HomePage : ContentPage
     void BuildActiveFilters()
     {
         ActiveFiltersArea.Children.Clear();
-
         var header = new Label
         {
             Text = "Active Filters",
@@ -66,10 +68,13 @@ public partial class HomePage : ContentPage
 
         foreach (var filter in filterService.UserFilters)
         {
-            var layout = new HorizontalStackLayout
+            var layout = new Grid
             {
-                HorizontalOptions = LayoutOptions.Fill,
-                Spacing = 10
+                ColumnDefinitions =
+                {
+                    new ColumnDefinition { Width = GridLength.Star },
+                    new ColumnDefinition { Width = GridLength.Auto }
+                }, Padding = new Thickness(0, 5)
             };
 
             var label = new Label
@@ -81,10 +86,10 @@ public partial class HomePage : ContentPage
             var removeButton = new Button
             {
                 Text = "X",
-                WidthRequest = 30,
-                HeightRequest = 30,
-                CornerRadius = 15,
-                BackgroundColor = Colors.LightGray
+                WidthRequest = 15,
+                HeightRequest = 15,
+                CornerRadius = 10,
+                BackgroundColor = Colors.Red
             };
 
             removeButton.Clicked += (s, e) =>

@@ -8,11 +8,11 @@ namespace DucktritionAPP.Services
 {
     public class UserFilterService
     {
-        private static UserFilterService _inst;
+        private static UserFilterService? _inst;
         public static UserFilterService Inst => _inst ??= (_inst = new UserFilterService());
 
-        public List<string> UserFilters { get; private set; } = new();
-        public event Action UserFilterChanged;
+        public List<string> UserFilters { get; private set; } = [];
+        public event Action? UserFilterChanged;
 
         public void AddFilter(string filter)
         {
