@@ -7,7 +7,7 @@ public partial class HomePage : ContentPage
 	readonly List<string> appFilters = [
         "Vegetarian", "Almond Allegy", "Shellfish Allergy", "Lactose Intolerant"
         ];
-    UserFilterService filterService = UserFilterService.Inst;
+    readonly UserFilterService filterService = UserFilterService.Inst;
 
 	public HomePage()
 	{

@@ -31,10 +31,8 @@ public partial class ForumPage : ContentPage
 
         foreach (var post in posts)
         {
-            var frame = new Frame
+            var frame = new Border
             {
-                BorderColor = Colors.Gray,
-                CornerRadius = 10,
                 Padding = 10,
                 Content = new VerticalStackLayout
                 {
