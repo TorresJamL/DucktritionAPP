@@ -2,28 +2,37 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="DucktritionAPP.Views.SearchPage"
-             Title="Search">
+             Title="Search"
+             BackgroundColor="Black">
     <VerticalStackLayout Padding="10" Spacing="5">
         <SearchBar x:Name="SearchBarControl"
                    Placeholder="Search for a place..."
-                   TextChanged="OnSearchTextChanged" />
-        <Image Source="placeholderimage.png"/>
-        <CollectionView x:Name="ResultsCollectionView">
-            <CollectionView.ItemTemplate>
-                <DataTemplate>
-                    <Grid Padding="10" ColumnDefinitions="60,*,Auto">
-                        <Image Grid.Column="0" Source="{Binding Image}" WidthRequest="50" HeightRequest="50" />
-                        <VerticalStackLayout Grid.Column="1" Spacing="2">
-                            <Label Text="{Binding Name}" FontAttributes="Bold" FontSize="16" />
-                            <Label Text="{Binding Description}" FontSize="13" TextColor="Gray" />
-                        </VerticalStackLayout>
-                        <Label Grid.Column="2"
-                               Text="{Binding Rating}"
-                               FontAttributes="Bold"
-                               VerticalOptions="Center" />
-                    </Grid>
-                </DataTemplate>
-            </CollectionView.ItemTemplate>
-        </CollectionView>
+                   TextChanged="OnSearchTextChanged" 
+                   HorizontalTextAlignment="Start"
+                   HorizontalOptions="Start"
+                   TextColor="White"
+                   PlaceholderColor="White"/>
+        <Image Source="placeholderimage.png" />
+        <Border>
+            <CollectionView x:Name="ResultsCollectionView">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Border>
+                            <Grid Padding="10" ColumnDefinitions="60,*,Auto">
+                                <Image Grid.Column="0" Source="{Binding Image}" WidthRequest="50" HeightRequest="50" />
+                                <VerticalStackLayout Grid.Column="1" Spacing="2">
+                                    <Label Text="{Binding Name}" FontAttributes="Bold" FontSize="20" TextColor="White"/>
+                                    <Label Text="{Binding Description}" FontSize="15" TextColor="Gray" />
+                                </VerticalStackLayout>
+                                <Label Grid.Column="2"
+                                       Text="{Binding Rating}"
+                                       FontAttributes="Bold"
+                                       VerticalOptions="Center" />
+                            </Grid>
+                        </Border>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </Border>
     </VerticalStackLayout>
 </ContentPage>

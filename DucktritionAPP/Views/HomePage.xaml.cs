@@ -5,7 +5,8 @@ namespace DucktritionAPP.Views;
 public partial class HomePage : ContentPage
 {
 	readonly List<string> appFilters = [
-        "Vegetarian", "Almond Allegy", "Shellfish Allergy", "Lactose Intolerant"
+        "Vegetarian", "Nut Allegy", "Shellfish Allergy", "Lactose Intolerant",
+        "Pescetarian"
         ];
     readonly UserFilterService filterService = UserFilterService.Inst;
 
@@ -28,7 +29,6 @@ public partial class HomePage : ContentPage
                     new ColumnDefinition { Width = GridLength.Auto }
                 }, Padding = new Thickness(0, 5)
             };
-
             var label = new Label
             {
                 Text = filter,

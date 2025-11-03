@@ -17,6 +17,9 @@ namespace DucktritionAPP.Services
                 { "Brew & Bean", new List<object> { "Cozy cafe with great espresso", 4.2, "placeholderimage.png" } },
                 { "Sushi Zen", new List<object> { "Fresh sushi and sashimi", 4.8, "placeholderimage.png" } },
                 { "Burger Point", new List<object> { "Classic American burgers", 4.1, "placeholderimage.png" } },
+                { "Foody's!", new List<object> { "We're, still here!", 3.0, "placeholderimage.png" } },
+                { "Jamil's Joint", new List<object> { "Edible Food, I swear", -0.5, "placeholderimage.png" } },
+                { "Mama Mary's", new List<object> { "Best Pizza Place of The Nation", -0.5, "placeholderimage.png" } },
             };
         }
         public Dictionary<string, List<object>> GetData()

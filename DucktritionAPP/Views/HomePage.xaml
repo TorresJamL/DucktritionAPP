@@ -2,7 +2,8 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="DucktritionAPP.Views.HomePage"
-             Title="Home">
+             Title="Home"
+             BackgroundColor="Black" >
     <VerticalStackLayout Spacing="10" Margin="5" Padding="20">
         <Label 
             Text="Welcome"
