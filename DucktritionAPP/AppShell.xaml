@@ -14,15 +14,15 @@
         <ShellContent
             Title="Search"
             ContentTemplate="{DataTemplate views:SearchPage}"
-            Icon="{OnPlatform 'houseico.png', iOS='', MacCatalyst=''}"/>
+            Icon="{OnPlatform 'searchico.png', iOS='', MacCatalyst=''}"/>
         <ShellContent
             Title="Scanner"
             ContentTemplate="{DataTemplate views:ScannerPage}"
-            Icon="{OnPlatform 'houseico.png', iOS='', MacCatalyst=''}"/>
+            Icon="{OnPlatform 'scanico.png', iOS='', MacCatalyst=''}"/>
         <ShellContent
             Title="Forum"
             ContentTemplate="{DataTemplate views:ForumPage}"
-            Icon="{OnPlatform 'houseico.png', iOS='', MacCatalyst=''}"/>
+            Icon="{OnPlatform 'forumico.png', iOS='', MacCatalyst=''}"/>
     </TabBar>
     
 </Shell>

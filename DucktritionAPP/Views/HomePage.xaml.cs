@@ -76,31 +76,28 @@ public partial class HomePage : ContentPage
                     new ColumnDefinition { Width = GridLength.Auto }
                 }, Padding = new Thickness(0, 5)
             };
-
             var label = new Label
             {
                 Text = filter,
                 VerticalOptions = LayoutOptions.Center
             };
-
             var removeButton = new Button
             {
                 Text = "X",
+                HorizontalOptions = LayoutOptions.End,
                 WidthRequest = 15,
                 HeightRequest = 15,
                 CornerRadius = 10,
                 BackgroundColor = Colors.Red
             };
-
             removeButton.Clicked += (s, e) =>
             {
                 filterService.UserFilters.Remove(filter);
                 BuildActiveFilters();
                 BuildAvailableFilters();
             };
-
-            layout.Children.Add(label);
-            layout.Children.Add(removeButton);
+            layout.Add(label, 0, 0);
+            layout.Add(removeButton, 1, 0);
             ActiveFiltersArea.Children.Add(layout);
         }
     }

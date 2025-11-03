@@ -2,11 +2,28 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="DucktritionAPP.Views.SearchPage"
-             Title="SearchPage">
-    <VerticalStackLayout>
-        <Label 
-            Text="Welcome to .NET MAUI!"
-            VerticalOptions="Center" 
-            HorizontalOptions="Center" />
+             Title="Search">
+    <VerticalStackLayout Padding="10" Spacing="5">
+        <SearchBar x:Name="SearchBarControl"
+                   Placeholder="Search for a place..."
+                   TextChanged="OnSearchTextChanged" />
+        <Image Source="placeholderimage.png"/>
+        <CollectionView x:Name="ResultsCollectionView">
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <Grid Padding="10" ColumnDefinitions="60,*,Auto">
+                        <Image Grid.Column="0" Source="{Binding Image}" WidthRequest="50" HeightRequest="50" />
+                        <VerticalStackLayout Grid.Column="1" Spacing="2">
+                            <Label Text="{Binding Name}" FontAttributes="Bold" FontSize="16" />
+                            <Label Text="{Binding Description}" FontSize="13" TextColor="Gray" />
+                        </VerticalStackLayout>
+                        <Label Grid.Column="2"
+                               Text="{Binding Rating}"
+                               FontAttributes="Bold"
+                               VerticalOptions="Center" />
+                    </Grid>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
     </VerticalStackLayout>
 </ContentPage>
