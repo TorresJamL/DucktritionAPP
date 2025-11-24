@@ -3,30 +3,47 @@ namespace DucktritionAPP.Views;
 
 public partial class SearchPage : ContentPage
 {
-    private readonly DataService _dataService;
+    private readonly GooglePlacesService _googleService;
+    private bool _initialized = false;
 
     public SearchPage()
     {
         InitializeComponent();
-        _dataService = new DataService();
-        LoadResults(_dataService.GetData());
+        _googleService = new GooglePlacesService();
     }
 
-    private void OnSearchTextChanged(object sender, TextChangedEventArgs e)
+    protected override async void OnAppearing()
     {
+        base.OnAppearing();
+        await _googleService.InitializeAsync();
+        _initialized = true;
+    }
+
+    private async void OnSearchTextChanged(object sender, TextChangedEventArgs e)
+    {
+        if (!_initialized) return;
         var query = e.NewTextValue;
-        var results = _dataService.Search(query);
+
+        if (string.IsNullOrWhiteSpace(query))
+        {
+            ResultsCollectionView.ItemsSource = null;
+            return;
+        }
+
+        var results = await _googleService.SearchPlacesAsync(query);
+
         LoadResults(results);
+
     }
 
-    private void LoadResults(Dictionary<string, List<object>> results)
+    private void LoadResults(List<EstablishmentData> results)
     {
-        var items = results.Select(kvp => new
+        var items = results.Select(place => new
         {
-            Name = kvp.Key,
-            Description = kvp.Value[0].ToString(),
-            Rating = kvp.Value[1].ToString(),
-            Image = kvp.Value[2].ToString()
+            Name = place.Name,
+            Description = place.Description ?? "No description",
+            Rating = place.Reviews?.FirstOrDefault()?.StarRating.ToString() ?? "—",
+            Image = "placeholderimage.png"
         });
 
         ResultsCollectionView.ItemsSource = items;

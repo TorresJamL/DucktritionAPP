@@ -7,22 +7,59 @@ namespace DucktritionAPP.Services
 {
     internal class GooglePlacesService
     {
-        private readonly string _apiKey;
+        private string? _apiKey;
         private readonly HttpClient _httpClient;
 
-        public GooglePlacesService(string apiKey)
+        public GooglePlacesService()
         {
-            _apiKey = apiKey;
             _httpClient = new HttpClient();
         }
 
-        public async Task<List<AutocompleteResult>> SearchPlacesAsync(string query)
+        public async Task InitializeAsync()
         {
-            var url = $"https://maps.googleapis.com/maps/api/place/autocomplete/json?input={query}&key={_apiKey}";
-            var json = await _httpClient.GetStringAsync(url);
-            var response = JsonSerializer.Deserialize<AutocompleteResponse>(json);
-            return response?.predictions ?? new List<AutocompleteResult>();
+            using var stream = await FileSystem.OpenAppPackageFileAsync("_t_.txt");
+            using var reader = new StreamReader(stream);
+            _apiKey = (await reader.ReadToEndAsync()).Trim();
         }
+
+        public async Task<List<AutocompletePrediction>> GetAutocompleteAsync(string query)
+        {
+            string url =
+                $"https://maps.googleapis.com/maps/api/place/autocomplete/json?input={Uri.EscapeDataString(query)}&key={_apiKey}&types=establishment";
+
+            var response = await _httpClient.GetAsync(url);
+
+            if (!response.IsSuccessStatusCode)
+                return new List<AutocompletePrediction>();
+
+            var json = await response.Content.ReadAsStringAsync();
+
+            var data = JsonSerializer.Deserialize<AutocompleteResponse>(json);
+
+            if (data?.predictions == null)
+                return new List<AutocompletePrediction>();
+
+            return data.predictions.Select(p => new AutocompletePrediction
+            {
+                PlaceId = p.place_id,
+                PrimaryText = p.structured_formatting.main_text
+            }).ToList();
+        }
+
+        public async Task<List<EstablishmentData>> SearchPlacesAsync(string query)
+        {
+            var predictions = await GetAutocompleteAsync(query);
+            var results = new List<EstablishmentData>();
+
+            foreach (var p in predictions)
+            {
+                var details = await GetPlaceDetailsAsync(p.PlaceId);
+                results.Add(details);
+            }
+
+            return results;
+        }
+
 
         public async Task<EstablishmentData?> GetPlaceDetailsAsync(string placeId)
         {
@@ -36,7 +73,7 @@ namespace DucktritionAPP.Services
             return new EstablishmentData
             {
                 Name = details.name,
-                Description = details.editorial_summary ?? "",
+                Description = details.editorial_summary?.overview ?? "",
                 Location = details.formatted_address,
                 Reviews = details.reviews?.Select(r => new Review
                 {
@@ -44,7 +81,7 @@ namespace DucktritionAPP.Services
                     Reviewer = r.author_name,
                     ReviewMSG = r.text
                 }).ToList() ?? new List<Review>(),
-                FilterTags = ["None"] // you can modify later
+                FilterTags = ["None"] 
             };
         }
     }
