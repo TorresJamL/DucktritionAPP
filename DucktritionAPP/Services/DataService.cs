@@ -4,6 +4,23 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+public class EstablishmentData
+{
+    public required string Name { get; set; }
+    public required string Description { get; set; }
+    public required List<Review> Reviews { get; set; }
+    public required string Location { get; set; }
+    public required List<string> FilterTags { get; set; }
+}
+
+public class Review
+{
+    public float StarRating { get; set; }
+    public required string Reviewer { get; set; }
+    public required string ReviewMSG { get; set; }
+}
+
+
 namespace DucktritionAPP.Services
 {
     public class DataService
