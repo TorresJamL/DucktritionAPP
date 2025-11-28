@@ -81,6 +81,7 @@ namespace DucktritionAPP.Services
                     Reviewer = r.author_name,
                     ReviewMSG = r.text
                 }).ToList() ?? new List<Review>(),
+                Photo = "NONE",
                 FilterTags = ["None"] 
             };
         }

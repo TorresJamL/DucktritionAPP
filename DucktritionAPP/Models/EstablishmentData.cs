@@ -18,6 +18,7 @@ namespace DucktritionAPP.Models
         public string? Description { get; set; }
         public List<Review>? Reviews { get; set; }
         public required string Location { get; set; }
+        public string? Photo { get; set; }
         public List<string>? FilterTags { get; set; }
     }
 }
