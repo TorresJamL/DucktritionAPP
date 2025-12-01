@@ -41,8 +41,8 @@ namespace DucktritionAPP.Services
 
             return data.predictions.Select(p => new AutocompletePrediction
             {
-                PlaceId = p.place_id,
-                PrimaryText = p.structured_formatting.main_text
+                place_id = p.place_id,
+                primary_text = p.structured_formatting.main_text
             }).ToList();
         }
 
@@ -53,7 +53,7 @@ namespace DucktritionAPP.Services
 
             foreach (var p in predictions)
             {
-                var details = await GetPlaceDetailsAsync(p.PlaceId);
+                var details = await GetPlaceDetailsAsync(p.place_id);
                 results.Add(details);
             }
 
@@ -63,12 +63,22 @@ namespace DucktritionAPP.Services
 
         public async Task<EstablishmentData?> GetPlaceDetailsAsync(string placeId)
         {
-            var url = $"https://maps.googleapis.com/maps/api/place/details/json?place_id={placeId}&fields=name,formatted_address,rating,reviews,editorial_summary,types&key={_apiKey}";
+            var url = $"https://maps.googleapis.com/maps/api/place/details/json?place_id={placeId}&fields=name,formatted_address,rating,reviews,editorial_summary,types,photos&key={_apiKey}";
             var json = await _httpClient.GetStringAsync(url);
             var response = JsonSerializer.Deserialize<PlaceDetailsResponse>(json);
 
             var details = response?.result;
             if (details == null) return null;
+
+            string? photoUrl = null;
+
+            if (details.photos != null && details.photos.Count > 0)
+            {
+                var photoRef = details.photos[0].photo_reference;
+
+                photoUrl = $"https://maps.googleapis.com/maps/api/place/photo" +
+                           $"?maxwidth=400&photo_reference={photoRef}&key={_apiKey}";
+            }
 
             return new EstablishmentData
             {
@@ -81,7 +91,7 @@ namespace DucktritionAPP.Services
                     Reviewer = r.author_name,
                     ReviewMSG = r.text
                 }).ToList() ?? new List<Review>(),
-                Photo = "NONE",
+                PhotoURL = photoUrl,
                 FilterTags = ["None"] 
             };
         }

@@ -10,15 +10,27 @@ namespace DucktritionAPP.Models
     {
         public float StarRating { get; set; }
         public required string Reviewer { get; set; }
-        public required string ReviewMSG { get; set; }
+        public required string ReviewMSG { get; set; } = "";
     }
     internal class EstablishmentData
     {
         public required string Name { get; set; }
-        public string? Description { get; set; }
-        public List<Review>? Reviews { get; set; }
+        public required string Description { get; set; } = "No Description Provided";
+        public required List<Review> Reviews { get; set; } = [];
         public required string Location { get; set; }
-        public string? Photo { get; set; }
+        public string? PhotoURL { get; set; }
         public List<string>? FilterTags { get; set; }
+
+        public float GetOverallRating()
+        {
+            float rating = 0.0f;
+            for (int i = 0; i < Reviews.Count; i++)
+            {
+                rating += Reviews[i].StarRating;
+            }
+            rating /= Reviews.Count;
+
+            return rating;
+        }
     }
 }

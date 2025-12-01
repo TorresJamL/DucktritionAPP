@@ -4,13 +4,19 @@
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:views="clr-namespace:DucktritionAPP.Views"
-    Shell.FlyoutBehavior="Disabled">
+    Shell.FlyoutBehavior="Disabled"
+    Shell.NavBarIsVisible="False"
+    Shell.TabBarBackgroundColor="#123456">
     
     <TabBar>
         <ShellContent
             Title="Home"
             ContentTemplate="{DataTemplate views:HomePage}"
             Icon="{OnPlatform 'houseico.png', iOS='', MacCatalyst=''}"/>
+        <ShellContent
+            Title="Filters"
+            ContentTemplate="{DataTemplate views:FilterPage}"
+            Icon="{OnPlatform 'globalfiltersico.png', iOS='', MacCatalyst=''}"/>
         <ShellContent
             Title="Search"
             ContentTemplate="{DataTemplate views:SearchPage}"

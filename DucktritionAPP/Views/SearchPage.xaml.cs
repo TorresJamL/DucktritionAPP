@@ -1,4 +1,6 @@
-using DucktritionAPP.Services;
+﻿using DucktritionAPP.Services;
+using DucktritionAPP.Models;
+using System.Text;
 namespace DucktritionAPP.Views;
 
 public partial class SearchPage : ContentPage
@@ -29,6 +31,10 @@ public partial class SearchPage : ContentPage
             ResultsCollectionView.ItemsSource = null;
             return;
         }
+        if (query.Length < 3)
+        {
+            return;
+        }
 
         var results = await _googleService.SearchPlacesAsync(query);
 
@@ -40,12 +46,26 @@ public partial class SearchPage : ContentPage
     {
         var items = results.Select(place => new
         {
-            Name = place.Name,
-            Description = place.Description ?? "No description",
-            Rating = place.Reviews?.FirstOrDefault()?.StarRating.ToString() ?? "�",
-            Image = "placeholderimage.png"
+            place.Name,
+            Rating = LoadStars(place.GetOverallRating()),
+            place.Location,
+            Description = (place.Description != "") ? place.Description : "No Description Provided",
+            Image = place.PhotoURL
         });
 
         ResultsCollectionView.ItemsSource = items;
+    }
+    private string LoadStars(float rating)
+    {
+        StringBuilder stars = new StringBuilder("☆☆☆☆☆");
+        char fullStar = '★';
+        for (int i = 0; i < 5; i++)
+        {
+            if ((int) rating - i > 0)
+            {
+                stars[i] = fullStar;
+            }
+        }
+        return stars.ToString();
     }
 }

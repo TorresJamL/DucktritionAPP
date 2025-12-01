@@ -11,8 +11,8 @@ namespace DucktritionAPP.Models
     {
         public class AutocompletePrediction
         {
-            public required string PlaceId { get; set; }
-            public required string PrimaryText { get; set; }
+            public required string place_id { get; set; }
+            public required string primary_text { get; set; }
         }
 
         internal class AutocompleteResponse
@@ -57,7 +57,15 @@ namespace DucktritionAPP.Models
             public float? rating { get; set; }
             public List<GoogleReview>? reviews { get; set; }
             public EditorialSummary? editorial_summary { get; set; }
+            public List<PhotoInfo>? photos { get; set; } = [];
             public List<string>? types { get; set; }
+        }
+
+        internal class PhotoInfo
+        {
+            public string photo_reference { get; set; } = "";
+            public int height { get; set; }
+            public int width { get; set; }
         }
 
         internal class EditorialSummary

@@ -3,36 +3,42 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="DucktritionAPP.Views.SearchPage"
              Title="Search"
+             IsVisible="Visible"
              BackgroundColor="Black">
-    <VerticalStackLayout Padding="10" Spacing="5">
-        <SearchBar x:Name="SearchBarControl"
-                   Placeholder="Search for a place..."
-                   TextChanged="OnSearchTextChanged" 
-                   HorizontalTextAlignment="Start"
-                   HorizontalOptions="Start"
-                   TextColor="White"
-                   PlaceholderColor="White"/>
-        <Image Source="placeholderimage.png" />
+    <VerticalStackLayout Padding="5" Spacing="0" >
         <Border>
-            <CollectionView x:Name="ResultsCollectionView">
-                <CollectionView.ItemTemplate>
-                    <DataTemplate>
-                        <Border>
-                            <Grid Padding="10" ColumnDefinitions="60,*,Auto">
-                                <Image Grid.Column="0" Source="{Binding Image}" WidthRequest="50" HeightRequest="50" />
-                                <VerticalStackLayout Grid.Column="1" Spacing="2">
-                                    <Label Text="{Binding Name}" FontAttributes="Bold" FontSize="20" TextColor="White"/>
-                                    <Label Text="{Binding Description}" FontSize="15" TextColor="Gray" />
-                                </VerticalStackLayout>
-                                <Label Grid.Column="2"
-                                       Text="{Binding Rating}"
-                                       FontAttributes="Bold"
-                                       VerticalOptions="Center" />
-                            </Grid>
-                        </Border>
-                    </DataTemplate>
-                </CollectionView.ItemTemplate>
-            </CollectionView>
+            <Border.StrokeShape>
+                <RoundRectangle CornerRadius="50,50,50,50" />
+            </Border.StrokeShape>
+            <SearchBar x:Name="SearchBarControl"
+                Placeholder="Search for a place..."
+                TextChanged="OnSearchTextChanged" 
+                HorizontalTextAlignment="Start"
+                HorizontalOptions="Start"
+                TextColor="White"
+                PlaceholderColor="White"/>
         </Border>
+        <Image Source="placeholderimage.png" IsVisible="Hidden"/>
+        <CollectionView x:Name="ResultsCollectionView">
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <Grid Padding="5" ColumnDefinitions="60,*,Auto">
+                        <Image Grid.Column="0" Source="{Binding Image}" WidthRequest="50" HeightRequest="50" />
+                        <VerticalStackLayout Grid.Column="1" Spacing="0">
+                            <Label Text="{Binding Name}" FontAttributes="Bold" FontSize="15" TextColor="White"/>
+                            <Label
+                                Text="{Binding Rating}"
+                                TextColor="White"
+                                FontSize="10"
+                                FontAttributes="Bold"
+                                VerticalOptions="Start"
+                                HorizontalOptions="Start" />
+                            <Label Text="{Binding Location}" FontSize="10" TextColor="SlateGray" />
+                            <Label Text="{Binding Description}" FontSize="10" TextColor="DarkGray" />
+                        </VerticalStackLayout>
+                    </Grid>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
     </VerticalStackLayout>
 </ContentPage>
